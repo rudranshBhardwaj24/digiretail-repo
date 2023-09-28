@@ -4,6 +4,21 @@ import Card from "./Card";
 
 function App() {
   const [data, setData] = useState([]);
+  const [searchData, setSearchData] = useState(data);
+  const [search, setSearch] = useState("");
+
+  const handleSearchInput = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSearch = () => {
+    const filteredData = data.filter((data) =>
+      data.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setSearchData(filteredData);
+    console.log(data);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +31,7 @@ function App() {
         }
         const jsonData = await response.json();
         setData(jsonData);
+        setSearchData(jsonData);
         console.log(jsonData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -27,11 +43,28 @@ function App() {
 
   return (
     <div>
-      {" "}
-      <div>
-        {data.map((user, index) => (
-          <Card key={index} user={user} />
-        ))}
+      <div className="search-container">
+        <input
+          type="text"
+          class="search-box"
+          placeholder="Search"
+          value={search}
+          onChange={handleSearchInput}
+        />
+        <button class="btn" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
+      <div className="container-box">
+        <div className="container">
+          {searchData.map((user, index) => (
+            <Card key={index} user={user} />
+          ))}
+        </div>
+      </div>
+
+      <div className="error">
+        {searchData.length <= 0 && <h1>Data does not exist</h1>}
       </div>
     </div>
   );
