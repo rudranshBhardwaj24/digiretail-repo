@@ -24,8 +24,8 @@ function App() {
     setSearchData(filteredData);
   };
 
+  // U can add new ID for new users
   const handleAddUser = (newUser) => {
-    // Generate a unique ID for the new user
     const newUserId = Math.max(...data.map((user) => user.id), 0) + 1;
     newUser.id = newUserId;
 
@@ -45,7 +45,6 @@ function App() {
     const storedUsers = getUsersFromLocalStorage();
 
     if (storedUsers.length > 0) {
-      // If data exists in local storage, set it to state
       setData(storedUsers);
       setSearchData(storedUsers);
     } else {
