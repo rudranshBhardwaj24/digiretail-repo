@@ -1,19 +1,24 @@
+import React from "react";
 import "./Card.css";
 
-function Card({ user }) {
-  const { name, username, email, phone, website } = user;
+const Card = ({ user, onDeleteUser }) => {
+  const handleDelete = () => {
+    onDeleteUser(user.id);
+  };
 
   return (
     <div className="card">
-      <div className="card-content">
-        <h2 className="card-title">{name}</h2>
-        <p className="card-text">Username: {username}</p>
-        <p className="card-text">Email: {email}</p>
-        <p className="card-text">Phone: {phone}</p>
-        <p className="card-text">Website: {website}</p>
-      </div>
+      <h2 className="card-title">{user.name}</h2>
+      <p className="card-text">Email: {user.email}</p>
+      <p className="card-text">
+        Address: {user.address.street}, {user.address.city}
+      </p>
+      <p className="card-text">Company: {user.company.name}</p>
+      <button className="delete-button" onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
-}
+};
 
 export default Card;
